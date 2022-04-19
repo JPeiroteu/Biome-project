@@ -2,7 +2,7 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <DHT.h>
-#include "config.h"
+#include "credentials.h"
 
 //network credentials - MODIFICATION REQUERED!
 const char* ssid = your_ssid;
