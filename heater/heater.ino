@@ -1,7 +1,6 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include "credentials.h"
-#include <WiFiClient.h> 
 
 //network credentials - MODIFICATION REQUERED!
 const char* ssid = your_ssid;
