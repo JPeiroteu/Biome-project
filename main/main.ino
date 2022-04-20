@@ -19,7 +19,7 @@ String readTemp; //current temperature
 String readHumid; //current humidity
 String tempThreshold; //desired temperature
 
-const char* serverName = "https://biome-project.000webhostapp.com/threshold_select.php";
+const char* serverNameThrSelect = "https://biome-project.000webhostapp.com/threshold_select.php";
 
 //HTML web page
 const char index_html[] PROGMEM = R"rawliteral(
@@ -114,10 +114,10 @@ String processor(const String& var){
 }
 
 //temperature and threshold function
-String readTemp() {
+String readTemp1() {
   return String(readTemp);
 }
-String tempThreshold() {
+String tempThreshold1() {
   return String(tempThreshold);
 }
 
@@ -156,10 +156,10 @@ void setup() {
   
   //tempeture and threshold requests 
   server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", readTemp().c_str());
+    request->send_P(200, "text/plain", readTemp1().c_str());
   });
   server.on("/threshold_input", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", tempThreshold().c_str());
+    request->send_P(200, "text/plain", tempThreshold1().c_str());
   });
 
   server.onNotFound(notFound);
@@ -170,7 +170,7 @@ void loop() {
   //sensor readings interval time
   delay(5000);
   
-  String tT = httpGETRequest(serverName);
+  float tT = httpGETRequest(serverNameThrSelect).toFloat();
   float t = dht.readTemperature();
   float h = dht.readHumidity();
 
@@ -179,12 +179,12 @@ void loop() {
     return;
   }
   else {  
-    Serial.println(t);
-    Serial.println(h);
-    Serial.println(tT);
+    Serial.println(t, 1);
+    Serial.println(h, 1);
+    Serial.println(tT, 1);
   }
 
-  readTemp = String(t);
-  readHumid = String(h);
-  tempThreshold = String(tT);
+  readTemp = String(t, 1);
+  readHumid = String(h, 1);
+  tempThreshold = String(tT, 1);
 }
