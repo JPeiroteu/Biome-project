@@ -17,7 +17,7 @@ DHT dht(DHTPIN, DHTTYPE);
 //variables
 String readTemp; //current temperature
 String readHumid; //current humidity
-String tempThreshold = "22.0"; //desired temperature
+String tempThreshold; //desired temperature
 
 const char* serverName = "https://biome-project.000webhostapp.com/threshold_select.php";
 
@@ -70,28 +70,7 @@ void notFound(AsyncWebServerRequest *request) {
 
 AsyncWebServer server(80);
 
-//HTML placeholders replace
-String processor(const String& var){
-  Serial.println(var); //optional
-  if(var == "TEMPERATURE"){
-    return readTemp;
-  }
-  if(var == "HUMIDITY"){
-    return readHumid;
-  }
-  else if(var == "THRESHOLD"){
-    return tempThreshold;
-  }
-  return String();
-}
 
-//temperature and threshold function
-String readTemp1() {
-  return String(readTemp);
-}
-String tempThreshold1() {
-  return String(tempThreshold);
-}
 
 String httpGETRequest(const char* serverName) {
   HTTPClient http;
@@ -119,8 +98,30 @@ String httpGETRequest(const char* serverName) {
   return payload;
 }
 
+//HTML placeholders replace
+String processor(const String& var){
+  Serial.println(var); //optional
+  if(var == "TEMPERATURE"){
+    return readTemp;
+  }
+  if(var == "HUMIDITY"){
+    return readHumid;
+  }
+  else if(var == "THRESHOLD"){
+    return tempThreshold;
+  }
+  return String();
+}
 
-const char* THRESHOLD_INPUT_1 = "threshold_input";
+//temperature and threshold function
+String readTemp() {
+  return String(readTemp);
+}
+String tempThreshold() {
+  return String(tempThreshold);
+}
+
+const char* THRESHOLD_INPUT = "threshold_input";
 
 void setup() {
   Serial.begin(115200);
@@ -138,11 +139,7 @@ void setup() {
 
   dht.begin();
 
-  tempThreshold = httpGETRequest(serverName);
-
-  Serial.println("test");
-  Serial.println(tempThreshold);
-
+  
   //web page 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/html", index_html, processor);
@@ -150,8 +147,8 @@ void setup() {
 
   //receive HTTP GET requests 
   server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
-    if (request->hasParam(THRESHOLD_INPUT_1)) {
-      tempThreshold = request->getParam(THRESHOLD_INPUT_1)->value();
+    if (request->hasParam(THRESHOLD_INPUT)) {
+      tempThreshold = request->getParam(THRESHOLD_INPUT)->value();
     }
     Serial.println(tempThreshold);
     request->send(200, "text/html", "HTTP GET request sent to your ESP.<br><a href=\"/\">Return to Home Page</a>");
@@ -159,10 +156,10 @@ void setup() {
   
   //tempeture and threshold requests 
   server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", readTemp1().c_str());
+    request->send_P(200, "text/plain", readTemp().c_str());
   });
   server.on("/threshold_input", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", tempThreshold1().c_str());
+    request->send_P(200, "text/plain", tempThreshold().c_str());
   });
 
   server.onNotFound(notFound);
@@ -173,7 +170,7 @@ void loop() {
   //sensor readings interval time
   delay(5000);
   
-
+  String tT = httpGETRequest(serverName);
   float t = dht.readTemperature();
   float h = dht.readHumidity();
 
@@ -184,8 +181,10 @@ void loop() {
   else {  
     Serial.println(t);
     Serial.println(h);
+    Serial.println(tT);
   }
 
   readTemp = String(t);
   readHumid = String(h);
+  tempThreshold = String(tT);
 }
