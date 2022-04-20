@@ -1,6 +1,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include "credentials.h"
+#include <WiFiClient.h> 
 
 //network credentials - MODIFICATION REQUERED!
 const char* ssid = your_ssid;
@@ -103,8 +104,8 @@ String httpGETRequest(const char* serverName) {
 
   //IP address or domain name with URL path
   http.begin(serverName);
-
-  //HTTP POST request
+  
+  //HTTP GET request
   int httpCode = http.GET();
 
   String payload = "";

@@ -6,14 +6,9 @@
 </head>
 <body>
 <?php
-require 'connection.php';
+include 'connection.php';
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-
-$sql = "SELECT Temperature, Humidity, Threshold FROM Room ORDER BY ID DESC LIMIT 1;";
+$sql = "SELECT Temperature, Humidity, Threshold FROM Room ORDER BY ID DESC LIMIT 1";
 
 if ($result = mysqli_query($conn, $sql)) {
   while ($row =  mysqli_fetch_assoc($result)) {
@@ -27,7 +22,7 @@ echo '
   <h2>Humidity</h2> 
   <h3>' . $row_humidity . '  &percnt;</h3>
   <h2>ESP Arm Trigger</h2>
-  <form action="threshold_insert.php" method="post">
+  <form action="threshold_insert.php" method="get">
     Temperature Threshold <input type="number" step="0.1" name="threshold" value="' . $row_threshold . '" required><br>
     <input type="submit" name="submit" value="Submit">
   </form>';

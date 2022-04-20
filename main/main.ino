@@ -2,6 +2,8 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <DHT.h>
+#include <HTTPClient.h>
+#include <WiFiClient.h> 
 #include "credentials.h"
 
 //network credentials - MODIFICATION REQUERED!
@@ -17,6 +19,8 @@ DHT dht(DHTPIN, DHTTYPE);
 String readTemp; //current temperature
 String readHumid; //current humidity
 String tempThreshold = "22.0"; //desired temperature
+
+const char* serverName = "https://biomeprojectcode.000webhostapp.com/threshold_select.php";
 
 //HTML web page
 const char index_html[] PROGMEM = R"rawliteral(
@@ -90,6 +94,39 @@ String tempThreshold1() {
   return String(tempThreshold);
 }
 
+String httpGETRequest(const char* serverName) {
+  WiFiClient client;
+  HTTPClient http;
+
+  //IP address or domain name with URL path
+  http.begin(client, serverName);
+
+  Serial.println("Servername");
+  Serial.println(serverName);  
+
+  //HTTP GET request
+  int httpCode = http.GET();
+
+  Serial.println("httpCode");
+  Serial.println(httpCode);
+
+  String payload = "";
+
+  if (httpCode > 0) {
+    //Serial.print("HTTP Response code: ");
+    //Serial.println(httpCode);
+
+    payload = http.getString();
+    //Serial.println(payload);
+  }
+  else {
+    Serial.print("Error code: ");
+    Serial.println(httpCode);
+  }
+  http.end(); 
+  return payload;
+}
+
 
 const char* THRESHOLD_INPUT_1 = "threshold_input";
 
@@ -108,6 +145,8 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   dht.begin();
+
+  tempThreshold = httpGETRequest(serverName);
   
   //web page 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -139,6 +178,7 @@ void loop() {
   //sensor readings interval time
   delay(5000);
   
+
   float t = dht.readTemperature();
   float h = dht.readHumidity();
 
