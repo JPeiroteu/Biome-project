@@ -97,7 +97,7 @@ void loop() {
   }
 }
 
-
+//get data from the other esp
 String httpGETRequest(const char* serverName) {
   HTTPClient http;
 
