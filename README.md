@@ -84,10 +84,12 @@ Click on the image for play the video
 
 See the open issues for a list of proposed features (and known issues).
 
+- [V] Add Data Base
+- [V] Add Online Access to the Valve
 - [ ] Add Manual Control of Threshold
-- [ ] Add Data Base
-- [ ] Add Possible Blinds System
 - [ ] QR Code Access to Webapp
+- [ ] Add Possible Blinds System
+
 
 
 
