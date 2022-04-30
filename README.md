@@ -27,7 +27,7 @@ Biome is an intelligent, sustainable energy system making peoples' lives indoors
 
 ### Parts Required
 
-- [2x ESP32 Board](https://www.amazon.de/AZDelivery-NodeMCU-Development-Nachfolgermodell-ESP8266/dp/B074RG86SR/ref=sr_1_8?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=Z6WEFARQI9FF&keywords=ESP+wroom+32+joy+it&qid=1651318635&sprefix=esp+wroom+32+joy+it%2Caps%2C77&sr=8-8)
+- [2x ESP32 Board](https://www.amazon.de/-/en/ESP-32S-Development-Bluetooth-Microcontroller-ESP-WROOM-32/dp/B07XH45MWW/ref=sr_1_19?crid=G8IZGQUA1J2V&keywords=esp32&qid=1651326820&sprefix=esp32%2Caps%2C95&sr=8-19)
 - [2x Breadboard](https://www.amazon.de/-/en/AZDelivery-Breadboard-Kit-Compatible-Book/dp/B078JGQKWP/ref=sr_1_6?crid=26659W6VDD48R&keywords=breadboards&qid=1651318781&sprefix=breadboards%2Caps%2C107&sr=8-6)
 - Jumper wires
 - [1x Sensor DHT11](https://www.amazon.de/-/en/AZDelivery-temperature-sensor-humidity-including/dp/B078S7FCZ9/ref=sr_1_3?crid=BDBR8ASPORAC&keywords=Sensor+DHT11&qid=1651318891&sprefix=sensor+dht11%2Caps%2C160&sr=8-3)
