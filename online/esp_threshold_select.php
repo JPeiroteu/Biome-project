@@ -7,9 +7,9 @@ if ($result = mysqli_query($conn, $sql)) {
   while ($row =  mysqli_fetch_assoc($result)) {
    $row_threshold = $row["Threshold"];
   }
-  $result->free();
+  mysqli_free_result($result);
 }
-$conn->close();
+mysqli_close($conn);
 
 echo $row_threshold;
 ?> 

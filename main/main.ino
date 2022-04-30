@@ -180,7 +180,7 @@ void loop() {
       }
       Serial.print("\nThreshold local request: ");
       Serial.print(tempThreshold);
-      request->send(200, "text/html", "HTTP GET request sent to your ESP.<br><a href=\"/\">Return to Home Page</a>");
+      request->send(200, "text/html", "New record has been added successfully !<br><a href=\"/\">Return to Home Page</a>");
     });
 
     /*Tests
@@ -214,10 +214,6 @@ void loop() {
       Serial.println(httpCode);
     }
     http1.end(); 
-
-
-
-
 
 
     //sensor readings interval time
@@ -254,11 +250,6 @@ void loop() {
       Serial.print(httpResponseCode);
     }
     http.end();
-
-
-
-
-
 
 
     if (isnan(t) || isnan(h)) {

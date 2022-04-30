@@ -27,9 +27,9 @@ echo '
     <input type="submit" name="submit" value="Submit">
   </form>';
   }
-  $result->free();
+  mysqli_free_result($result);
 }
-$conn->close();
+mysqli_close($conn);
 ?> 
 </body>
 </html>

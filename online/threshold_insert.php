@@ -3,12 +3,15 @@ include 'connection.php';
 
 if(isset($_GET['submit'])) {    
    $threshold = $_GET['threshold'];
-   $sql = "INSERT INTO Room (Temperature, Humidity, Threshold) VALUES ('0', '0', '$threshold')";
-   if (mysqli_query($conn, $sql)) {
-      echo "New record has been added successfully !";
+   $stmt = $conn->prepare("INSERT INTO Room (Threshold) VALUES (?)"); //stmt prepared statement, without it the webapp is vulnerable to SQL Injection
+   $stmt->bind_param("d", $threshold);
+   if ($stmt->execute()) {
+      echo "New record has been added successfully !<br><a href=\"/\">Return to Home Page</a>";
+      //header("Location: ./");
    } else {
-      echo "Error: " . $sql . ":-" . mysqli_error($conn);
+      echo $conn->error;
    }
-   mysqli_close($conn);
+   $stmt->close();
+   $conn->close();
 }
 ?>
