@@ -97,7 +97,7 @@ See the open issues for a list of proposed features (and known issues).
 
 Jorge Guedes - jorge.guedes@code.berlin
 
-Repository Link: [https://github.com/JPeiroteu/Biome-project](https://github.com/JPeiroteu/Biome-project)
+Repository Link: https://github.com/JPeiroteu/Biome-project
 
 Webapp Link: https://biome-project.000webhostapp.com/
 
