@@ -2,6 +2,7 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <DHT.h>
+#include <HTTPClient.h>
 #include "credentials.h"
 
 //network credentials - MODIFICATION REQUERED!
@@ -16,7 +17,12 @@ DHT dht(DHTPIN, DHTTYPE);
 //variables
 String readTemp; //current temperature
 String readHumid; //current humidity
-String tempThreshold = "22.0"; //desired temperature
+String tempThreshold; //desired temperature
+
+const char* serverNameThrSelect = "https://biome-project.000webhostapp.com/esp_threshold_select.php";
+const char* serverNameDataInsert = "https://biome-project.000webhostapp.com/esp_data_insert.php";
+
+String apiKeyValue = "c5623602F3d2";
 
 //HTML web page
 const char index_html[] PROGMEM = R"rawliteral(
@@ -32,7 +38,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   <h3 id="humidity">%HUMIDITY% &percnt;</h3>
   <h2>ESP Arm Trigger</h2>
   <form action="/get">
-    Temperature Threshold <input type="number" step="0.1" name="threshold_input" value="%THRESHOLD%" required><br>
+    Temperature Threshold <input type="number" step="0.1" id="threshold" name="threshold_input" value="%THRESHOLD%" required><br>
     <input type="submit" value="Submit">
   </form>
 </body>
@@ -46,7 +52,7 @@ setInterval(function ( ) {
   };
   xhttp.open("GET", "/temperature", true);
   xhttp.send();
-}, 10000 ) ;
+}, 30000 ) ;
 
 setInterval(function ( ) {
   var xhttp = new XMLHttpRequest();
@@ -57,7 +63,18 @@ setInterval(function ( ) {
   };
   xhttp.open("GET", "/humidity", true);
   xhttp.send();
-}, 10000 ) ;
+}, 30000 ) ;
+
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("threshold").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "/threshold", true);
+  xhttp.send();
+}, 30000 ) ;
 </script>
 </html>)rawliteral";
 
@@ -67,9 +84,9 @@ void notFound(AsyncWebServerRequest *request) {
 
 AsyncWebServer server(80);
 
+
 //HTML placeholders replace
 String processor(const String& var){
-  Serial.println(var); //optional
   if(var == "TEMPERATURE"){
     return readTemp;
   }
@@ -82,7 +99,7 @@ String processor(const String& var){
   return String();
 }
 
-//temperature and threshold function
+//temperature and threshold
 String readTemp1() {
   return String(readTemp);
 }
@@ -90,8 +107,7 @@ String tempThreshold1() {
   return String(tempThreshold);
 }
 
-
-const char* THRESHOLD_INPUT_1 = "threshold_input";
+const char* THRESHOLD_INPUT = "threshold_input";
 
 void setup() {
   Serial.begin(115200);
@@ -99,7 +115,7 @@ void setup() {
   //wifi connection
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  Serial.print("Connecting ...");
+  Serial.print("\nConnecting ...");
   while (WiFi.status() != WL_CONNECTED) {
     delay(100);
     Serial.print(".");
@@ -108,21 +124,17 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   dht.begin();
+
+  /*Tests
+  Serial.print("\ntestThreshold1: ");
+  Serial.print(tempThreshold);*/
   
   //web page 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/html", index_html, processor);
   });
 
-  //receive HTTP GET requests 
-  server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
-    if (request->hasParam(THRESHOLD_INPUT_1)) {
-      tempThreshold = request->getParam(THRESHOLD_INPUT_1)->value();
-    }
-    Serial.println(tempThreshold);
-    request->send(200, "text/html", "HTTP GET request sent to your ESP.<br><a href=\"/\">Return to Home Page</a>");
-  });
-  
+
   //tempeture and threshold requests 
   server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", readTemp1().c_str());
@@ -136,21 +148,140 @@ void setup() {
 }
 
 void loop() {
-  //sensor readings interval time
-  delay(5000);
-  
-  float t = dht.readTemperature();
-  float h = dht.readHumidity();
+  if(WiFi.status()== WL_CONNECTED){
+    float t = dht.readTemperature();
+    float h = dht.readHumidity();
 
-  if (isnan(t) || isnan(h)) {
-    Serial.println(F("Sensor failed"));
-    return;
+    //receive HTTP GET requests 
+    server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
+      if (request->hasParam(THRESHOLD_INPUT)) {
+        tempThreshold = request->getParam(THRESHOLD_INPUT)->value();
+
+        //insert new data into db
+        HTTPClient http;
+
+        http.begin(serverNameDataInsert);
+
+        //specify content type header
+        http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        /*Tests
+        Serial.print("\ntestThreshold2: ");
+        Serial.print(tempThreshold);*/
+
+        //HTTP POST request data
+        String httpRequestData = "api_key=" + apiKeyValue + "&temperature=" + readTemp + "&humidity=" + readHumid + "&threshold=" + tempThreshold;
+
+        //send HTTP POST request
+        int httpResponseCode = http.POST(httpRequestData);
+
+        /*Tests
+        Serial.print("\ntestThreshold3: ");
+        Serial.print(tempThreshold);*/
+
+        if (httpResponseCode>0) {
+          //Serial.print("HTTP Response code: ");
+          //Serial.println(httpResponseCode);
+        }
+        else {
+          Serial.println("Error code: ");
+          Serial.print(httpResponseCode);
+        }
+        http.end();
+      }
+      Serial.print("\nThreshold local request: ");
+      Serial.print(tempThreshold);
+      request->send(200, "text/html", "New record has been added successfully !<br><a href=\"/\">Return to Home Page</a>");
+    });
+
+    /*Tests
+    Serial.print("\n\ntestThreshold4: ");
+    Serial.print(tempThreshold);*/
+
+    delay(30000);
+
+    //get threshold data from db
+    HTTPClient http1;
+
+    //IP address or domain name with URL path
+    http1.begin(serverNameThrSelect);
+
+    //HTTP GET request
+    int httpCode = http1.GET();
+
+    if (httpCode > 0) {
+      //Serial.print("\nHTTP Response code: ");
+      //Serial.println(httpCode);
+
+      tempThreshold = http1.getString();
+      tempThreshold = tempThreshold.toFloat();
+
+      /*Tests Float conversion
+      Serial.print("\ntestThreshold5(Float): ");
+      Serial.print(tempThreshold);*/
+    }
+    else {
+      Serial.print("\nError code: ");
+      Serial.println(httpCode);
+    }
+    http1.end(); 
+
+
+    //sensor readings interval time
+    delay(30000);
+
+    //insert new data into db
+    HTTPClient http;
+
+    http.begin(serverNameDataInsert);
+
+    //specify content type header
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    /*Tests
+    Serial.print("\ntestThreshold6: ");
+    Serial.print(tempThreshold);*/
+
+    //HTTP POST request data
+    String httpRequestData = "api_key=" + apiKeyValue + "&temperature=" + readTemp + "&humidity=" + readHumid + "&threshold=" + tempThreshold;
+
+    //send HTTP POST request
+    int httpResponseCode = http.POST(httpRequestData);
+
+    /*Tests
+    Serial.print("\ntestThreshold7: ");
+    Serial.print(tempThreshold);*/
+
+    if (httpResponseCode>0) {
+      //Serial.print("HTTP Response code: ");
+      //Serial.println(httpResponseCode);
+    }
+    else {
+      Serial.println("Error code: ");
+      Serial.print(httpResponseCode);
+    }
+    http.end();
+
+
+    if (isnan(t) || isnan(h)) {
+      Serial.println(F("Sensor failed"));
+      return;
+    }
+    else {  
+      Serial.print("\ntemp: ");
+      Serial.print(t);
+      Serial.print("\nhumid: ");;
+      Serial.print(h);
+      Serial.print("\nthres: ");
+      Serial.print(tempThreshold);
+    }
+
+    readTemp = String(t);
+    readHumid = String(h);
+    tempThreshold = String(tempThreshold);
   }
-  else {  
-    Serial.println(t);
-    Serial.println(h);
+  else {
+    Serial.println("WiFi Disconnected");
   }
 
-  readTemp = String(t);
-  readHumid = String(h);
 }

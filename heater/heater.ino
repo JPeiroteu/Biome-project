@@ -97,14 +97,14 @@ void loop() {
   }
 }
 
-
+//get data from the other esp
 String httpGETRequest(const char* serverName) {
   HTTPClient http;
 
   //IP address or domain name with URL path
   http.begin(serverName);
-
-  //HTTP POST request
+  
+  //HTTP GET request
   int httpCode = http.GET();
 
   String payload = "";
