@@ -1,6 +1,6 @@
 # Biome
 
-Biome is an intelligent, sustainable energy system making peoples' lives indoors healthier and more efficient. The objective of this project is to create a smart valve that transforms any old radiator into a smart heater, centralizing the heat system of the building.
+Biome is an intelligent, sustainable energy system making peoples' lives indoors healthier and more efficient. The objective of this project is to create a smart valve that transforms any old radiator into a smart heater, thus allowing centralized control of any heating system.
 
 <p align="center">
   <img width="600" src="https://user-images.githubusercontent.com/79811891/165746275-8879fc77-0d6f-41b8-bad2-11538717443b.png">
