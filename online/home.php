@@ -8,6 +8,10 @@
 <?php
 include 'connection.php';
 
+session_start();
+
+echo "Welcome back " . $_SESSION['email'];
+
 $sql = "SELECT Temperature, Humidity, Threshold FROM Room ORDER BY ID DESC LIMIT 1";
 
 if ($result = mysqli_query($conn, $sql)) {

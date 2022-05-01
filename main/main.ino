@@ -38,7 +38,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   <h3 id="humidity">%HUMIDITY% &percnt;</h3>
   <h2>ESP Arm Trigger</h2>
   <form action="/get">
-    Temperature Threshold <input type="number" step="0.1" name="threshold_input" value="%THRESHOLD%" required><br>
+    Temperature Threshold <input type="number" step="0.1" id="threshold" name="threshold_input" value="%THRESHOLD%" required><br>
     <input type="submit" value="Submit">
   </form>
 </body>
@@ -52,7 +52,7 @@ setInterval(function ( ) {
   };
   xhttp.open("GET", "/temperature", true);
   xhttp.send();
-}, 10000 ) ;
+}, 30000 ) ;
 
 setInterval(function ( ) {
   var xhttp = new XMLHttpRequest();
@@ -63,7 +63,18 @@ setInterval(function ( ) {
   };
   xhttp.open("GET", "/humidity", true);
   xhttp.send();
-}, 10000 ) ;
+}, 30000 ) ;
+
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("threshold").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "/threshold", true);
+  xhttp.send();
+}, 30000 ) ;
 </script>
 </html>)rawliteral";
 
