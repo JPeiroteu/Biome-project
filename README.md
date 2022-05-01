@@ -73,7 +73,7 @@ Plug the ESP32 board to your computer. With your Arduino IDE open, follow these 
 Click on the image for play the video
 
 <p align="center">
-  <a href="http://www.youtube.com/watch?feature=player_embedded&v=r1hkMHx0Ycg" target="_blank">
+  <a href="https://youtu.be/mobOuVpaaxY" target="_blank">
    <img src="http://img.youtube.com/vi/r1hkMHx0Ycg/mqdefault.jpg" alt="Watch the video" width="720" height="" border="10" />
   </a>
 </p>
