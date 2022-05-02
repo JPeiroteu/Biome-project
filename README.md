@@ -101,4 +101,8 @@ Repository Link: https://github.com/JPeiroteu/Biome-project
 
 Webapp Link: https://biome-project.000webhostapp.com/
 
+Webapp Credentials:
+Email: guest.test@code.berlin
+Password: 123
+
 <p align="right">(<a href="#top">back to top</a>)</p>
