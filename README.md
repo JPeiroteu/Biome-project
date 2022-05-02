@@ -84,14 +84,31 @@ Click on the image for play the video
 
 See the open issues for a list of proposed features (and known issues).
 
-- [x] Add Data Base
+- [x] Add Database
 - [x] Add Online Access to the Valve
 - [ ] Add Manual Control of Threshold
 - [ ] QR Code Access to Webapp
 - [ ] Add Possible Blinds System
 
 
+## Security
 
+### Threat Modeling
+
+![Threat_Modeling](https://user-images.githubusercontent.com/79811891/166241108-755fb513-cf13-4611-87ca-163fc3a46a0f.jpg)
+
+
+### Implemented Security Measures
+
+- Ensured that errors are not visible in the Web Application from the attacker's perspective.  I.e., no feedback of "no user exists", "incorrect password", "password accepted" or anything like that
+- Updated programs, systems, and libraries
+- Placed an authentication form to protect unauthorized use of the application
+- Established the use of strong passwords
+- Used password encryption
+- Ensured that the SQL form only accepts data of specific types/lengths to prevent injection
+- Used Prepared Statements in SQL querys
+- Used of the HTTPS protocol
+- Encrypted communications with SSL
 
 ## Contact
 
