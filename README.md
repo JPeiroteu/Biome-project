@@ -78,6 +78,19 @@ Click on the image for play the video
   </a>
 </p>
 
+**Important Information**
+
+Make sure your router is using the 2.4Ghz frequency band, otherwise the ESP32 will not work.
+
+### Respective Links
+
+Repository Link: https://github.com/JPeiroteu/Biome-project
+
+Webapp Link: https://biome-project.000webhostapp.com/
+
+Webapp Authentication:
+- Email: guest.test@code.berlin
+- Password: 123
 
 
 ## Roadmap
@@ -116,14 +129,5 @@ See the open issues for a list of proposed features (and known issues).
 
 Jorge Guedes - jorge.guedes@code.berlin
 
-Repository Link: https://github.com/JPeiroteu/Biome-project
-
-Webapp Link: https://biome-project.000webhostapp.com/
-
-Webapp Credentials:
-
-Email: guest.test@code.berlin
-
-Password: 123
 
 <p align="right">(<a href="#top">back to top</a>)</p>
