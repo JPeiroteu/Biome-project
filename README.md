@@ -101,14 +101,16 @@ See the open issues for a list of proposed features (and known issues).
 ### Implemented Security Measures
 
 - Ensured that errors are not visible in the Web Application from the attacker's perspective.  I.e., no feedback of "no user exists", "incorrect password", "password accepted" or anything like that
+- Access credentials stored in separate files
 - Updated programs, systems, and libraries
-- Placed an authentication form to protect unauthorized use of the application
-- Established the use of strong passwords
-- Used password encryption
-- Ensured that the SQL form only accepts data of specific types/lengths to prevent injection
-- Used Prepared Statements in SQL querys
-- Used of the HTTPS protocol
+- Put in place an authentication form to protect unauthorized use of the application
+- Strong passwords have been established
+- Password encryption was used
+- Ensured that the SQL form only accepts data of specific type/length to prevent injection
+- Used Prepared statements in SQL queries
+- HTTPS protocol was used
 - Encrypted communications with SSL
+
 
 ## Contact
 
