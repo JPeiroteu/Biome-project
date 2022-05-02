@@ -1,15 +1,19 @@
 <?php
 include 'connection.php';
 
-$sql = "SELECT Threshold FROM Room ORDER BY ID DESC LIMIT 1";
+$stmt = $conn->prepare("SELECT Threshold FROM Room ORDER BY ID DESC LIMIT 1"); //stmt prepared statement, without it the webapp is vulnerable to SQL Injection
+$stmt->execute();
+$stmt->bind_result($threshold);
+$stmt->store_result();
 
-if ($result = mysqli_query($conn, $sql)) {
-  while ($row =  mysqli_fetch_assoc($result)) {
-   $row_threshold = $row["Threshold"];
-  }
-  mysqli_free_result($result);
+if($stmt->num_rows == 1) {
+  $stmt->fetch();
 }
-mysqli_close($conn);
+else {
+  echo $stmt->error;
+}
+$stmt->close();
+$conn->close();
 
-echo $row_threshold;
+echo $threshold;
 ?> 

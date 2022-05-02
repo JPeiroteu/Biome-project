@@ -124,10 +124,6 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   dht.begin();
-
-  /*Tests
-  Serial.print("\ntestThreshold1: ");
-  Serial.print(tempThreshold);*/
   
   //web page 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -152,7 +148,7 @@ void loop() {
     float t = dht.readTemperature();
     float h = dht.readHumidity();
 
-    //receive HTTP GET requests 
+    //HTTP GET request into the variable 
     server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
       if (request->hasParam(THRESHOLD_INPUT)) {
         tempThreshold = request->getParam(THRESHOLD_INPUT)->value();
@@ -165,19 +161,9 @@ void loop() {
         //specify content type header
         http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        /*Tests
-        Serial.print("\ntestThreshold2: ");
-        Serial.print(tempThreshold);*/
-
         //HTTP POST request data
         String httpRequestData = "api_key=" + apiKeyValue + "&temperature=" + readTemp + "&humidity=" + readHumid + "&threshold=" + tempThreshold;
-
-        //send HTTP POST request
         int httpResponseCode = http.POST(httpRequestData);
-
-        /*Tests
-        Serial.print("\ntestThreshold3: ");
-        Serial.print(tempThreshold);*/
 
         if (httpResponseCode>0) {
           //Serial.print("HTTP Response code: ");
@@ -193,10 +179,6 @@ void loop() {
       Serial.print(tempThreshold);
       request->send(200, "text/html", "New record has been added successfully !<br><a href=\"/\">Return to Home Page</a>");
     });
-
-    /*Tests
-    Serial.print("\n\ntestThreshold4: ");
-    Serial.print(tempThreshold);*/
 
     delay(30000);
 
@@ -215,17 +197,12 @@ void loop() {
 
       tempThreshold = http1.getString();
       tempThreshold = tempThreshold.toFloat();
-
-      /*Tests Float conversion
-      Serial.print("\ntestThreshold5(Float): ");
-      Serial.print(tempThreshold);*/
     }
     else {
       Serial.print("\nError code: ");
       Serial.println(httpCode);
     }
     http1.end(); 
-
 
     //sensor readings interval time
     delay(30000);
@@ -238,19 +215,11 @@ void loop() {
     //specify content type header
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    /*Tests
-    Serial.print("\ntestThreshold6: ");
-    Serial.print(tempThreshold);*/
-
     //HTTP POST request data
     String httpRequestData = "api_key=" + apiKeyValue + "&temperature=" + readTemp + "&humidity=" + readHumid + "&threshold=" + tempThreshold;
 
     //send HTTP POST request
     int httpResponseCode = http.POST(httpRequestData);
-
-    /*Tests
-    Serial.print("\ntestThreshold7: ");
-    Serial.print(tempThreshold);*/
 
     if (httpResponseCode>0) {
       //Serial.print("HTTP Response code: ");
@@ -283,5 +252,4 @@ void loop() {
   else {
     Serial.println("WiFi Disconnected");
   }
-
 }

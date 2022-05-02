@@ -1,7 +1,7 @@
 <?php
 include 'connection.php';
 
-session_start();
+session_start(); //important if you want to use the SESSION data
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
@@ -32,11 +32,12 @@ else {
 
 $conn->close();
 
-/* insert example 
+/* 
+//insert new user (sha1)
+sql = "INSERT INTO User (Email, Password) VALUES ('guest.test@code.berlin', sha1(123))";
+
+//insert new user - this option is not configured
 $hashPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 sql = "INSERT INTO User (Email, Password) VALUES ('test@test.com', '$hashPassword')"; 123 password
-
-
-sql = "INSERT INTO User (Email, Password) VALUES ('test@test.com', sha1(123))";
 */
 ?> 
