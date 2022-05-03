@@ -2,6 +2,8 @@
 
 Biome is an intelligent, sustainable energy system making peoples' lives indoors healthier and more efficient. The objective of this project is to create a smart valve that transforms any old radiator into a smart heater, thus allowing centralized control of any heating system.
 
+<br>
+
 <p align="center">
   <img width="600" src="https://user-images.githubusercontent.com/79811891/165746275-8879fc77-0d6f-41b8-bad2-11538717443b.png">
 </p>
@@ -22,6 +24,8 @@ Biome is an intelligent, sustainable energy system making peoples' lives indoors
 - [Arduino](https://www.arduino.cc/)
 - [C++](https://www.cplusplus.com/)
 - [HTML](https://www.w3.org/html/)
+
+<br>
 
 ## Getting Started
 
@@ -78,8 +82,7 @@ Click on the image for play the video
   </a>
 </p>
 
-**Important Information**
-
+***Important Information!***<br>
 Make sure your router is using the 2.4Ghz frequency band, otherwise the ESP32 will not work.
 
 ### Respective Links
@@ -92,6 +95,7 @@ Webapp Authentication:
 - Email: guest.test@code.berlin
 - Password: 123
 
+<br>
 
 ## Roadmap
 
@@ -103,6 +107,7 @@ See the open issues for a list of proposed features (and known issues).
 - [ ] QR Code Access to Webapp
 - [ ] Add Possible Blinds System
 
+<br>
 
 ## Security
 
@@ -124,6 +129,7 @@ See the open issues for a list of proposed features (and known issues).
 - HTTPS protocol was used
 - Encrypted communications with SSL
 
+<br>
 
 ## Contact
 
