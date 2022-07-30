@@ -2,6 +2,8 @@
 
 Biome is an intelligent, sustainable energy system making peoples' lives indoors healthier and more efficient. The objective of this project is to create a smart valve that transforms any old radiator into a smart heater, thus allowing centralized control of any heating system.
 
+<br>
+
 <p align="center">
   <img width="600" src="https://user-images.githubusercontent.com/79811891/165746275-8879fc77-0d6f-41b8-bad2-11538717443b.png">
 </p>
@@ -22,6 +24,8 @@ Biome is an intelligent, sustainable energy system making peoples' lives indoors
 - [Arduino](https://www.arduino.cc/)
 - [C++](https://www.cplusplus.com/)
 - [HTML](https://www.w3.org/html/)
+
+<br>
 
 ## Getting Started
 
@@ -78,31 +82,58 @@ Click on the image for play the video
   </a>
 </p>
 
+***Important Information!***<br>
+Make sure your router is using the 2.4Ghz frequency band, otherwise the ESP32 will not work.
 
-
-## Roadmap
-
-See the open issues for a list of proposed features (and known issues).
-
-- [x] Add Data Base
-- [x] Add Online Access to the Valve
-- [ ] Add Manual Control of Threshold
-- [ ] QR Code Access to Webapp
-- [ ] Add Possible Blinds System
-
-
-
-
-## Contact
-
-Jorge Guedes - jorge.guedes@code.berlin
+### Respective Links
 
 Repository Link: https://github.com/JPeiroteu/Biome-project
 
 Webapp Link: https://biome-project.000webhostapp.com/
 
-Webapp Credentials:
-Email: guest.test@code.berlin
-Password: 123
+Webapp Authentication:
+- Email: guest.test@code.berlin
+- Password: 123
+
+<br>
+
+## Roadmap
+
+See the open issues for a list of proposed features (and known issues).
+
+- [x] Add Database
+- [x] Add Online Access to the Valve
+- [ ] Add Manual Control of Threshold
+- [ ] QR Code Access to Webapp
+- [ ] Add Possible Blinds System
+
+<br>
+
+## Security
+
+### Threat Modeling
+
+![Threat_Modeling](https://user-images.githubusercontent.com/79811891/166241108-755fb513-cf13-4611-87ca-163fc3a46a0f.jpg)
+
+
+### Implemented Security Measures
+
+- Ensured that errors are not visible in the Web Application from the attacker's perspective.  I.e., no feedback of "no user exists", "incorrect password", "password accepted" or anything like that
+- Access credentials stored in separate files
+- Updated programs, systems, and libraries
+- Put in place an authentication form to protect unauthorized use of the application
+- Strong passwords have been established
+- Password encryption was used
+- Ensured that the SQL form only accepts data of specific type/length to prevent injection
+- Used Prepared statements in SQL queries
+- HTTPS protocol was used
+- Encrypted communications with SSL
+
+<br>
+
+## Contact
+
+Jorge Guedes - jorge.guedes@code.berlin
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
