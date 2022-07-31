@@ -1,3 +1,9 @@
+<?php
+require "../private/connection.php";
+
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
+?>
+
 <!DOCTYPE html>    
 <html>    
 <head>    
@@ -17,6 +23,7 @@
             </label>    
             <input type="password" name="pasword" id="password" placeholder="Password" required maxlength="300">   
             <br><br>    
+            <input type="hidden" name="token" value="<?=$_SESSION["token"]?>"/>
             <input type="submit" name="log" id="log" value="Log In">
         </form>     
     </div>    

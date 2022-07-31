@@ -1,7 +1,7 @@
 <?php
-include 'connection.php';
+require "../private/connection.php";
 
-$stmt = $conn->prepare("SELECT Threshold FROM Room ORDER BY ID DESC LIMIT 1"); //stmt prepared statement, without it the webapp is vulnerable to SQL Injection
+$stmt = $conn->prepare("SELECT tar_threshold FROM target ORDER BY tar_id DESC LIMIT 1"); //stmt prepared statement, without it the webapp is vulnerable to SQL Injection
 $stmt->execute();
 $stmt->bind_result($threshold);
 $stmt->store_result();
