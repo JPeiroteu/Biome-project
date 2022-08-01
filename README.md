@@ -113,7 +113,7 @@ See the open issues for a list of proposed features (and known issues).
 
 ### Threat Model
 
-![Threat_Modeling](https://user-images.githubusercontent.com/79811891/182141316-f8244f89-5470-4f1e-998b-e3fe551ec3cc.jpg)
+![Threat_Model](https://user-images.githubusercontent.com/79811891/182141316-f8244f89-5470-4f1e-998b-e3fe551ec3cc.jpg)
 
 
 ### Implemented Security Measures
@@ -130,6 +130,12 @@ See the open issues for a list of proposed features (and known issues).
 - Used Prepared statements in SQL queries
 - Random CSRF tokens are created to prevent attacks
 - HTTPS protocol and SSL encryption to secure the communications between entities
+
+<br>
+
+## ER Model - Database
+
+![ER Model](https://user-images.githubusercontent.com/79811891/182163080-32f04fcb-211c-4768-bb61-46c3e035f101.png)
 
 <br>
 
