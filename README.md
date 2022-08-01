@@ -111,23 +111,25 @@ See the open issues for a list of proposed features (and known issues).
 
 ## Security
 
-### Threat Modeling
+### Threat Model
 
-![Threat_Modeling](https://user-images.githubusercontent.com/79811891/166241108-755fb513-cf13-4611-87ca-163fc3a46a0f.jpg)
+![Threat_Modeling](https://user-images.githubusercontent.com/79811891/182141316-f8244f89-5470-4f1e-998b-e3fe551ec3cc.jpg)
 
 
 ### Implemented Security Measures
 
-- Ensured that errors are not visible in the Web Application from the attacker's perspective.  I.e., no feedback of "no user exists", "incorrect password", "password accepted" or anything like that
-- Access credentials stored in separate files
+- Ensured that errors are not visible in the Web Application from the attacker's perspective.  I.e., no feedback of "no user exists", "incorrect password", "password accepted" or any sql errors
+- Access credentials to the microcontrollers ESP32s stored in separate files
+- Database access credentials stored in a secure folder
 - Updated programs, systems, and libraries
-- Put in place an authentication form to protect unauthorized use of the application
+- Login form was used to prevent unauthenticated users from using the application
 - Strong passwords have been established
-- Password encryption was used
-- Ensured that the SQL form only accepts data of specific type/length to prevent injection
+- Bcrypt algorithm was used to securely hash and salt passwords
+- Input validation was used to prevent incorrectly formed data from being injected
+- Ensured that the SQL queries/form only accepts data of specific type/length to prevent injection
 - Used Prepared statements in SQL queries
-- HTTPS protocol was used
-- Encrypted communications with SSL
+- Random CSRF tokens are created to prevent attacks
+- HTTPS protocol and SSL encryption to secure the communications between entities
 
 <br>
 
