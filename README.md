@@ -111,7 +111,7 @@ See the open issues for a list of proposed features (and known issues).
 
 ## Security
 
-### Threat Modeling
+### Threat Model
 
 ![Threat_Modeling](https://user-images.githubusercontent.com/79811891/182139721-a9eeb8f1-1c68-4602-9292-a821d57dbb3d.jpg)
 
