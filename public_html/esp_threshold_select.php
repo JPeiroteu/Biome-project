@@ -16,4 +16,3 @@ $stmt->close();
 $conn->close();
 
 echo $threshold;
-?> 

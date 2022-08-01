@@ -24,4 +24,3 @@ if(isset($_GET['submit'])) {
    $stmt->close();
    $conn->close();
 }
-?>

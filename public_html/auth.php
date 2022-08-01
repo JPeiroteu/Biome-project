@@ -45,4 +45,3 @@ $conn->close();
 $hashPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
 sql = "INSERT INTO userr (use_name, use_email, use_password) VALUES ('Guest Test', 'guest.test@code.berlin', '$hashPassword')";  //123 password
 */
-?> 
