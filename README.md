@@ -113,7 +113,7 @@ See the open issues for a list of proposed features (and known issues).
 
 ### Threat Modeling
 
-![Threat_Modeling](https://user-images.githubusercontent.com/79811891/166241108-755fb513-cf13-4611-87ca-163fc3a46a0f.jpg)
+![Threat_Modeling](https://user-images.githubusercontent.com/79811891/182139479-0f727ece-fe46-4b73-a19b-7c5dca4b8df8.jpg)
 
 
 ### Implemented Security Measures
