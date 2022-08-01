@@ -6,10 +6,9 @@ $stmt->execute();
 $stmt->bind_result($threshold);
 $stmt->store_result();
 
-if($stmt->num_rows == 1) {
+if ($stmt->num_rows == 1) {
   $stmt->fetch();
-}
-else {
+} else {
   echo $stmt->error;
 }
 $stmt->close();
